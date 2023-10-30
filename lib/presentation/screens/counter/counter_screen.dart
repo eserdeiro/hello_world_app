@@ -25,42 +25,57 @@ class _CounterScreenState extends State<CounterScreen> {
                   fontSize: 160,
                   fontWeight: FontWeight.w100)),
             Text('Click${clickCounter == 1 ? "" : "s"}',
-                style: const TextStyle(fontSize: 50, fontWeight: FontWeight.w100))
+                style: const TextStyle(fontSize: 50, fontWeight: FontWeight.w100)),
+            Text(clickCounter >=  99 ? "u have reached the limit :)" : "",
+                style: const TextStyle(fontSize: 25, fontWeight: FontWeight.w100)),
           ],
         ),
       ),
-      floatingActionButton: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-        FloatingActionButton(
-        onPressed: () {
-          if(clickCounter == 0) return;
+       const SizedBox(width: 35),
+      CounterWidgets(icon: Icons.exposure_minus_1_outlined,
+      onPressed: (){
+        if(clickCounter == 0) return;
           clickCounter--;
-          setState(() { });
-        },
-        child: const Icon(Icons.exposure_minus_1),
-      ),
-      
-      const SizedBox(height: 10),
-
-      FloatingActionButton(
-        onPressed: () {
-          clickCounter++;
-          setState(() { });
-        },
-        child: const Icon(Icons.plus_one),
-      ),
-
-      const SizedBox(height: 10),
-
-      FloatingActionButton(
-        onPressed: () {
-          clickCounter = 0;
-          setState(() { });
-        },
-        child: const Icon(Icons.refresh_outlined),
-      ),
+        setState(() { });
+      }),
+      //const SizedBox(height: 10),
+      CounterWidgets(icon: Icons.plus_one,
+      onPressed: (){
+        if(clickCounter == 99) return;
+         clickCounter++;
+        setState(() { });
+      }),
+      //const SizedBox(height: 10),
+      CounterWidgets(icon: Icons.refresh_outlined,
+      onPressed: (){
+         clickCounter = 0;
+        setState(() {  });
+      }),
+      const SizedBox(height: 1),
       ],)
+    );
+  }
+}
+
+class CounterWidgets extends StatelessWidget {
+final IconData icon;
+final VoidCallback? onPressed;
+
+  const CounterWidgets({
+    super.key,
+    required this.icon,
+    this.onPressed
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return FloatingActionButton(
+      elevation: 5,
+      onPressed: onPressed,
+      child: Icon(icon),
     );
   }
 }
